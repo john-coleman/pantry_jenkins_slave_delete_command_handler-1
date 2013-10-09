@@ -4,64 +4,37 @@ development:
     secret_access_key: some_aws_iam_secret_access_key
     region: eu-west-1
   daemon:
-    app_name: this_daemon_name
+    app_name: pantry_jenkins_slave_delete_command_handler
     backtrace: true
-    dir_mode: normal 
+    dir_mode: normal
     dir: /tmp
     monitor: false
   pantry:
-    api_key: some_pantry_api_key
+    api_key: 
     request_timeout: 10
-    url: http://some.pantry.fqdn
+    url: 
   sqs:
-    queue_name: daemon_specific_queue
+    queue_name: pantry_test-jenkins_slave_delete_command_handler
   sns:
-    topic_arn: daemon_specific_topic_arn
-    error_arn: daemon_specific_error_arn
+    topic_arn: arn:aws:sns:eu-west-1:...-jenkins_slave_delete_event
+    error_arn: arn:aws:sns:eu-west-1:001100110011:pantry_error_logs
 test:
   aws:
     access_key_id: some_aws_iam_access_key_id
     secret_access_key: some_aws_iam_secret_access_key
     region: eu-west-1
   daemon:
-    app_name: this_daemon_name
+    app_name: pantry_jenkins_slave_delete_command_handler
     backtrace: true
-    dir_mode: system
-    dir: /var/run
-    log:
-      logger: file
-      log_file: /var/run/this_daemon_logfile.log
-      shift_age: 4
-    monitor: true
+    dir_mode: normal
+    dir: /tmp
+    monitor: false
   pantry:
-    api_key: some_pantry_api_key
+    api_key: 
     request_timeout: 10
-    url: http://some.pantry.fqdn
+    url: 
   sqs:
-    queue_name: daemon_specific_queue
+    queue_name: pantry_example_com-jenkins_slave_delete_command_handler
   sns:
-    topic_arn: daemon_specific_topic_arn
-    error_arn: daemon_specific_error_arn
-production:
-  aws:
-    access_key_id: some_aws_iam_access_key_id
-    secret_access_key: some_aws_iam_secret_access_key
-    region: eu-west-1
-  daemon:
-    app_name: this_daemon_name
-    backtrace: false
-    dir_mode: system 
-    dir: /var/run
-    log:
-      logger: syslog
-      log_facility: syslog
-    monitor: true
-  pantry:
-    api_key: some_pantry_api_key
-    request_timeout: 10
-    url: http://some.pantry.fqdn
-  sqs:
-    queue_name: daemon_specific_queue
-  sns:
-    topic_arn: daemon_specific_topic_arn
-    error_arn: daemon_specific_error_arn
+    topic_arn: arn:aws:sns:eu-west-1:001100110011:pantry_example_com-jenkins_slave_delete_event
+    error_arn: arn:aws:sns:eu-west-1:001100110011:pantry_error_logs
