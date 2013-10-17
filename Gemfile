@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'pantry_daemon_common', git: 'git@github.com:wongatech/pantry_daemon_common.git', :tag => 'v0.1.7'
+gem 'pantry_daemon_common', git: 'git@github.com:wongatech/pantry_daemon_common.git', :tag => 'v0.2.0'
 gem 'jenkins_api_client'
 
 group :development do
