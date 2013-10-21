@@ -12,7 +12,7 @@ module Wonga
         server_port = message['server_port'] || '80'
         @client = JenkinsApi::Client.new(server_ip: message['server_ip'], server_port: server_port)
         @logger.info "Deleting #{message['node']} slave"
-        @client.node.delete(message['name'])
+        @client.node.delete(message['node'])
         @logger.info "Deleted #{message['node']} slave"
         @publisher.publish(message)
       end
