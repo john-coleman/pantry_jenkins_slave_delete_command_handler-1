@@ -18,6 +18,7 @@ module Wonga
         server_port = message['server_port'] || '80'
         result = RestClient.get("http://#{message['server_ip']}:#{server_port}/computer/api/json")
         node = get_node(message, result)
+        return true if node.nil?
         @logger.info "Deleting #{node} slave"
         RestClient.post("http://#{message['server_ip']}:#{server_port}/computer/#{node}.#{message["domain"]}/doDelete", {})
       end
