@@ -26,8 +26,8 @@ module Wonga
       def get_node(message, result)
         h = JSON.parse(result)
         computers = h["computer"].map {|c| c["displayName"]}
-        return message["node"].upcase if computers.include?("#{message["node"].upcase}.#{message["domain"]}")
-        return message["node"] if computers.include?("#{message["node"]}.#{message["domain"]}")
+        return message["hostname"].upcase if computers.include?("#{message["hostname"].upcase}.#{message["domain"]}")
+        return message["hostname"] if computers.include?("#{message["hostname"]}.#{message["domain"]}")
         @logger.info "Node name not found" and nil
       end
     end
