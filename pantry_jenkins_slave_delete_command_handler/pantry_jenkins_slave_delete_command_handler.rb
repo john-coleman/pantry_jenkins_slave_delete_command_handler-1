@@ -46,7 +46,7 @@ module Wonga
       def jenkins_username_and_password(name)
         node = Chef::Node.load(name)
         begin
-          if !node["jenkins"]["cli"]["username"].nil? && !node["jenkins"]["cli"]["username"].empty? && !node["jenkins"]["cli"]["password"].nil? && !node["jenkins"]["cli"]["password"].empty?
+          if !node["jenkins"]["cli"]["username"].empty?
             { username: node["jenkins"]["cli"]["username"], password: node["jenkins"]["cli"]["password"] }
           else
             nil

@@ -11,6 +11,7 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
   let(:message) { {"hostname" => "jenkins-linux-agent", "domain" => "vagrant", "server_ip" => "localhost.lvh.me", "server_port" => "8080"} }
   let(:publisher) { instance_double('Publisher').as_null_object }
   let(:node_params) { { "username" => "ProvisionerUsername", "password" => "secret", "jvm_options" => "-Xmx50m -Xms5m" } }
+  let(:node_nil_params) { { "username" => nil, "password" => nil } }
   subject { described_class.new(publisher, double.as_null_object) }
   it_behaves_like 'handler'
   
@@ -91,6 +92,8 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
       VCR.use_cassette('synopsis', :record => :all) do
         node = Chef::Node.new
         node.name("host.example.com")
+        node.default['os'] = "Linux"
+        node.default[:jenkins][:cli] = node_nil_params
         node.save
         subject.jenkins_username_and_password("host.example.com").should be_nil
       end
