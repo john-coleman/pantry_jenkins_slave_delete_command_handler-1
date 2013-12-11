@@ -48,8 +48,6 @@ module Wonga
         begin
           if !node["jenkins"]["cli"]["username"].empty?
             { username: node["jenkins"]["cli"]["username"], password: node["jenkins"]["cli"]["password"] }
-          else
-            nil
           end
         rescue NoMethodError => e
           @logger.info "Cannot find username and password of Jenkins server: #{e}"
