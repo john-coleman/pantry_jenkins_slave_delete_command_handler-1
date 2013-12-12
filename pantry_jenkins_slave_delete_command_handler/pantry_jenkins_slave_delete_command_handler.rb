@@ -46,7 +46,9 @@ module Wonga
       def jenkins_username_and_password(name)
         node = Chef::Node.load(name)
         begin
-          { username: node["jenkins"]["cli"]["username"], password: node["jenkins"]["cli"]["password"] }
+          if !node["jenkins"]["cli"]["username"].empty?
+            { username: node["jenkins"]["cli"]["username"], password: node["jenkins"]["cli"]["password"] }
+          end
         rescue NoMethodError => e
           @logger.info "Cannot find username and password of Jenkins server: #{e}"
           nil
