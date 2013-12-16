@@ -23,8 +23,8 @@ module Wonga
         result = RestClient.get("http://#{message['server_ip']}:#{server_port}/computer/api/json")
         node = get_node(message, result)
         return true if node.nil?
-        credentials = jenkins_username_and_password(node)
-        
+        credentials = jenkins_username_and_password(message["server_ip"])
+
         if credentials
           api_token = get_api_token(message["server_ip"], message["server_port"], credentials[:username], credentials[:password])
           @logger.info "Deleting #{node} slave with authentication"
@@ -46,7 +46,7 @@ module Wonga
       def jenkins_username_and_password(name)
         node = Chef::Node.load(name)
         begin
-          if !node["jenkins"]["cli"]["username"].empty?
+          unless node["jenkins"]["cli"]["username"].empty?
             { username: node["jenkins"]["cli"]["username"], password: node["jenkins"]["cli"]["password"] }
           end
         rescue NoMethodError => e
