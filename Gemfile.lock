@@ -1,119 +1,101 @@
 GIT
   remote: git@github.com:wongatech/pantry_daemon_common.git
-  revision: 07f83adcad7d7187fbeb5900a0b21b3ef4e41b41
-  tag: v0.2.2
+  revision: 3d6dc89242918aefc9d903da1867ba0fb0207302
+  tag: v0.2.6
   specs:
-    pantry_daemon_common (0.2.2)
+    pantry_daemon_common (0.2.6)
       aws-sdk
       daemons
-      em-winrm
+      em-winrm (>= 0.5.5)
       net-ssh
       net-ssh-multi
       rest-client
       syslogger
 
-GIT
-  remote: https://github.com/besol/em-winrm.git
-  revision: 3a61bf6246666a5260ec0811db045da318e0d4af
-  specs:
-    em-winrm (0.6.0)
-      eventmachine
-      mixlib-log
-      uuidtools
-      winrm
-
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.5)
-    akami (1.2.0)
+    addressable (2.3.6)
+    akami (1.2.2)
       gyoku (>= 0.4.0)
-      nokogiri (>= 1.4.0)
-    aws-sdk (1.30.0)
+      nokogiri
+    aws-sdk (1.46.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
-      uuidtools (~> 2.1)
     builder (3.2.2)
     celluloid (0.15.2)
       timers (~> 1.1.0)
-    chef (11.8.2)
-      chef-zero (~> 1.6, >= 1.6.2)
+    chef (11.12.8)
+      chef-zero (>= 2.0.2, < 2.1)
       diff-lcs (~> 1.2, >= 1.2.4)
       erubis (~> 2.7)
       highline (~> 1.6, >= 1.6.9)
-      json (>= 1.4.4, <= 1.7.7)
+      json (>= 1.4.4, <= 1.8.1)
       mime-types (~> 1.16)
       mixlib-authentication (~> 1.3)
-      mixlib-cli (~> 1.3)
+      mixlib-cli (~> 1.4)
       mixlib-config (~> 2.0)
       mixlib-log (~> 1.3)
-      mixlib-shellout (~> 1.2)
+      mixlib-shellout (~> 1.4)
       net-ssh (~> 2.6)
-      net-ssh-multi (~> 1.1.0)
-      ohai (~> 6.0)
+      net-ssh-multi (~> 1.1)
+      ohai (~> 7.0.4)
       pry (~> 0.9)
-      puma (~> 1.6)
       rest-client (>= 1.0.4, < 1.7.0)
       yajl-ruby (~> 1.1)
-    chef-zero (1.7.2)
+    chef-zero (2.0.2)
       hashie (~> 2.0)
       json
       mixlib-log (~> 1.3)
-      moneta (< 0.7.0)
       rack
     coderay (1.1.0)
-    columnize (0.3.6)
-    crack (0.4.1)
-      safe_yaml (~> 0.9.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     daemons (1.1.9)
-    debugger (1.6.3)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.2.4)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.4)
     diff-lcs (1.2.5)
-    docile (1.1.1)
-    domain_name (0.5.15)
+    docile (1.1.5)
+    domain_name (0.5.19)
       unf (>= 0.0.5, < 1.0.0)
+    em-winrm (0.5.5)
+      eventmachine (~> 1.0.0)
+      mixlib-log (>= 1.3.0)
+      uuidtools (~> 2.1.1)
+      winrm (~> 1.1.2)
     erubis (2.7.0)
     eventmachine (1.0.3)
     ffi (1.9.3)
-    formatador (0.2.4)
+    formatador (0.2.5)
     gssapi (1.0.3)
       ffi (>= 1.0.1)
-    guard (2.2.4)
+    guard (2.6.1)
       formatador (>= 0.2.4)
-      listen (~> 2.1)
+      listen (~> 2.7)
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-bundler (2.0.0)
-      bundler (~> 1.0)
-      guard (~> 2.2)
-    guard-rspec (4.2.0)
-      guard (>= 2.1.1)
+    guard-rspec (4.2.10)
+      guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
-    gyoku (1.1.0)
+    gyoku (1.1.1)
       builder (>= 2.1.2)
-    hashie (2.0.5)
-    highline (1.6.20)
+    hashie (2.1.2)
+    highline (1.6.21)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    httpclient (2.3.4.1)
+    httpclient (2.4.0)
     httpi (0.9.7)
       rack
     ipaddress (0.8.0)
-    json (1.7.7)
-    listen (2.4.0)
+    json (1.8.1)
+    listen (2.7.9)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     little-plugger (1.1.3)
-    logging (1.8.1)
+    logging (1.8.2)
       little-plugger (>= 1.1.3)
-      multi_json (>= 1.3.6)
-    lumberjack (1.0.4)
+      multi_json (>= 1.8.4)
+    lumberjack (1.0.9)
     mechanize (2.7.2)
       domain_name (~> 0.5, >= 0.5.1)
       http-cookie (~> 1.0.0)
@@ -125,63 +107,60 @@ GEM
       webrobots (>= 0.0.9, < 0.2)
     method_source (0.8.2)
     mime-types (1.25.1)
-    mini_portile (0.5.2)
+    mini_portile (0.6.0)
     mixlib-authentication (1.3.0)
       mixlib-log
-    mixlib-cli (1.4.0)
+    mixlib-cli (1.5.0)
     mixlib-config (2.1.0)
     mixlib-log (1.6.0)
-    mixlib-shellout (1.3.0)
-    moneta (0.6.0)
-    multi_json (1.8.2)
+    mixlib-shellout (1.4.0)
+    multi_json (1.10.1)
     net-http-digest_auth (1.4)
-    net-http-persistent (2.9)
-    net-ssh (2.7.0)
+    net-http-persistent (2.9.4)
+    net-ssh (2.9.1)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    net-ssh-multi (1.1)
-      net-ssh (>= 2.1.4)
-      net-ssh-gateway (>= 0.99.0)
-    nokogiri (1.6.0)
-      mini_portile (~> 0.5.0)
+    net-ssh-multi (1.2.0)
+      net-ssh (>= 2.6.5)
+      net-ssh-gateway (>= 1.2.0)
+    nokogiri (1.6.2.1)
+      mini_portile (= 0.6.0)
     nori (1.1.5)
     ntlm-http (0.1.1)
-    ohai (6.20.0)
+    ohai (7.0.4)
       ipaddress
+      mime-types (~> 1.16)
       mixlib-cli
-      mixlib-config
+      mixlib-config (~> 2.0)
       mixlib-log
-      mixlib-shellout
+      mixlib-shellout (~> 1.2)
       systemu (~> 2.5.2)
       yajl-ruby
-    pry (0.9.12.4)
-      coderay (~> 1.0)
-      method_source (~> 0.8)
+    pry (0.10.0)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-debugger (0.2.2)
-      debugger (~> 1.3)
-      pry (~> 0.9.10)
-    puma (1.6.3)
-      rack (~> 1.2)
     rack (1.5.2)
-    rake (10.1.0)
-    rb-fsevent (0.9.3)
-    rb-inotify (0.9.2)
+    rake (10.3.2)
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rspec (2.14.1)
-      rspec-core (~> 2.14.0)
-      rspec-expectations (~> 2.14.0)
-      rspec-mocks (~> 2.14.0)
-    rspec-core (2.14.7)
-    rspec-expectations (2.14.4)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-fire (1.3.0)
-      rspec (>= 2.11, < 4)
-    rspec-mocks (2.14.4)
+    rspec (3.0.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
+    rspec-core (3.0.2)
+      rspec-support (~> 3.0.0)
+    rspec-expectations (3.0.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.0.0)
+    rspec-mocks (3.0.2)
+      rspec-support (~> 3.0.0)
+    rspec-support (3.0.2)
     rubyntlm (0.1.1)
-    safe_yaml (0.9.7)
+    safe_yaml (1.0.3)
     savon (0.9.5)
       akami (~> 1.0)
       builder (>= 2.1.2)
@@ -197,20 +176,20 @@ GEM
     simplecov-html (0.8.0)
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
-    slop (3.4.7)
+    slop (3.5.0)
     syslogger (1.5.1)
     systemu (2.5.2)
-    thor (0.18.1)
+    thor (0.19.1)
     timers (1.1.0)
-    unf (0.1.3)
+    unf (0.1.4)
       unf_ext
     unf_ext (0.0.6)
     uuidtools (2.1.4)
-    vcr (2.8.0)
+    vcr (2.9.2)
     wasabi (1.0.0)
       nokogiri (>= 1.4.0)
-    webmock (1.16.0)
-      addressable (>= 2.2.7)
+    webmock (1.18.0)
+      addressable (>= 2.3.6)
       crack (>= 0.3.2)
     webrobots (0.1.1)
     winrm (1.1.3)
@@ -221,24 +200,20 @@ GEM
       rubyntlm (~> 0.1.1)
       savon (= 0.9.5)
       uuidtools (~> 2.1.2)
-    yajl-ruby (1.1.0)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  chef (~> 11.8.2)
+  chef (~> 11.12)
   chef-zero
-  em-winrm!
-  guard-bundler
   guard-rspec
   mechanize
   nokogiri
   pantry_daemon_common!
-  pry-debugger
   rake
   rspec
-  rspec-fire
   simplecov
   simplecov-rcov
   vcr

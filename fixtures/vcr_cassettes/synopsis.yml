@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       accept:
-      - '*/*'
+      - "*/*"
       user-agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       accept-encoding:
@@ -167,7 +167,7 @@ http_interactions:
       string: j_username=ProvisionerUsername&j_password=ProvisionerPassword&from=
     headers:
       accept:
-      - '*/*'
+      - "*/*"
       user-agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       accept-encoding:
@@ -187,7 +187,7 @@ http_interactions:
         password: 
         host: instalments.example.com
         port: 80
-        path: /login
+        path: "/login"
         query: 
         opaque: 
         registry: 
@@ -231,7 +231,7 @@ http_interactions:
       string: ''
     headers:
       accept:
-      - '*/*'
+      - "*/*"
       user-agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       accept-encoding:
@@ -522,7 +522,7 @@ http_interactions:
       string: ''
     headers:
       accept:
-      - '*/*'
+      - "*/*"
       user-agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       accept-encoding:
@@ -776,7 +776,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       Accept-Encoding:
@@ -925,7 +925,7 @@ http_interactions:
       string: j_username=ProvisionerUsername&j_password=secret&from=
     headers:
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       Accept-Encoding:
@@ -945,7 +945,7 @@ http_interactions:
         password: 
         host: localhost.lvh.me
         port: 8080
-        path: /login
+        path: "/login"
         query: 
         opaque: 
         registry: 
@@ -987,7 +987,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       Accept-Encoding:
@@ -1139,7 +1139,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Mechanize/2.7.3 Ruby/1.9.3p448 (http://github.com/sparklemotion/mechanize/)
       Accept-Encoding:
@@ -1337,7 +1337,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - '*/*; q=0.5, application/xml'
+      - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
       Content-Length:
@@ -1371,7 +1371,7 @@ http_interactions:
     uri: http://127.0.0.1:8889/nodes/jenkins-linux-agent.vagrant
     body:
       encoding: ASCII-8BIT
-      string: '{"name":"jenkins-linux-agent.vagrant","chef_environment":"_default","json_class":"Chef::Node","automatic":{},"normal":{},"chef_type":"node","default":{},"override":{},"run_list":[]}'
+      string: "{\"name\":\"jenkins-linux-agent.vagrant\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{},\"override\":{},\"run_list\":[]}"
     headers:
       Accept:
       - application/json
@@ -1511,8 +1511,8 @@ http_interactions:
     uri: http://127.0.0.1:8889/nodes/jenkins-linux-agent
     body:
       encoding: ASCII-8BIT
-      string: '{"name":"jenkins-linux-agent","chef_environment":"_default","json_class":"Chef::Node","automatic":{},"normal":{},"chef_type":"node","default":{"jenkins":{"cli":{"username":"ProvisionerUsername","password":"secret","jvm_options":"-Xmx50m
-        -Xms5m"}}},"override":{},"run_list":[]}'
+      string: "{\"name\":\"jenkins-linux-agent\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{\"jenkins\":{\"cli\":{\"username\":\"ProvisionerUsername\",\"password\":\"secret\",\"jvm_options\":\"-Xmx50m
+        -Xms5m\"}}},\"override\":{},\"run_list\":[]}"
     headers:
       Content-Type:
       - application/json
@@ -1570,68 +1570,6 @@ http_interactions:
     http_version: 
   recorded_at: Mon, 16 Dec 2013 17:02:45 GMT
 - request:
-    method: put
-    uri: http://127.0.0.1:8889/nodes/localhost.lvh.me
-    body:
-      encoding: ASCII-8BIT
-      string: '{"name":"localhost.lvh.me","chef_environment":"_default","json_class":"Chef::Node","automatic":{},"normal":{},"chef_type":"node","default":{},"override":{},"run_list":[]}'
-    headers:
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      X-Ops-Sign:
-      - algorithm=sha1;version=1.0;
-      X-Ops-Userid:
-      - aslynko
-      X-Ops-Timestamp:
-      - '2013-12-16T17:07:19Z'
-      X-Ops-Content-Hash:
-      - zdveutZX4EnUtxnne8xsS9msPT4=
-      X-Ops-Authorization-1:
-      - npKN1jCJaegved+jsri8K+F/vTp08yo1kyRTe9DPpkpkcjP2w9qOCwsIwBtx
-      X-Ops-Authorization-2:
-      - 0tHo68npMc1j0wwrEhHelTZZTCGtoYnShY5okQacMWZ5ZYAqo9ukTavxxJTb
-      X-Ops-Authorization-3:
-      - lntTr4m4DUJFwP//om0imV1R9VlSyxaU3pToafugOLyLmVF4UwhgzbdQ9RTJ
-      X-Ops-Authorization-4:
-      - 3xjacQwSKnY//P7wY5YpTKlWfs4yUhoCkZ1FjvweDRH2she5VNbDRNh4/hzU
-      X-Ops-Authorization-5:
-      - 1Yg9h6SZXu1krJvM/yQ20w3IWagxnlwsEhgjbxFq2HdhizDAcWspWF9rBeYB
-      X-Ops-Authorization-6:
-      - YGeuTGkdrBJGfYlojVRTSsSB7ct0pjA+OBTEgLOOKA==
-      Host:
-      - 127.0.0.1:8889
-      Content-Length:
-      - '170'
-      X-Chef-Version:
-      - 11.8.2
-      User-Agent:
-      - Chef Knife/11.8.2 (ruby-2.0.0-p247; ohai-6.20.0; x86_64-darwin12.4.0; +http://opscode.com)
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Content-Type:
-      - application/json
-      Server:
-      - chef-zero
-      Content-Length:
-      - '89'
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "error": [
-            "Object not found: http://127.0.0.1:8889/nodes/localhost.lvh.me"
-          ]
-        }
-    http_version: 
-  recorded_at: Mon, 16 Dec 2013 17:07:19 GMT
-- request:
     method: get
     uri: http://127.0.0.1:8889/nodes/localhost.lvh.me
     body:
@@ -1647,38 +1585,44 @@ http_interactions:
       X-Ops-Userid:
       - aslynko
       X-Ops-Timestamp:
-      - '2013-12-16T17:07:19Z'
+      - '2014-06-24T18:00:08Z'
       X-Ops-Content-Hash:
       - 2jmj7l5rSw0yVb/vlWAYkK/YBwk=
       X-Ops-Authorization-1:
-      - Q/jEWCLsRBDLnTsqmWffqf/pmQW3JzwW8v668cvqTMIT/nr+c3PZsWenXaoI
+      - YhRVVX7cw2daA20jd7YFR5DLQDopDfhpQVFL0H2WFAFkYZHmyPLUkaLatesK
       X-Ops-Authorization-2:
-      - OPFkDpz4pleozcxh2kqtk1EbLbJYvvPC6Wnor8r2AFQcG5yEOjS4HFZatDx6
+      - kRvmVIo6uf2CayMHhTyTo0gh7ECRIJE4e8knAR834YdihlZO0y4WQyhShN4x
       X-Ops-Authorization-3:
-      - I1CLSgWg7W9voAdNdxJAzfd0Mqhra4LyFUb0Jq4q7jJBsEaRkt10PmjOStqX
+      - 7C3qv+bn4ggcKpNmFEFgmDF3RaYtSoz9a1qwvAtF/RopVxzG9JzuxnT2CG+u
       X-Ops-Authorization-4:
-      - 2OGpKIrHyBolXRVWLNmjYfEPs+3BBcJBuEy5ve5JQrWn5cBM4azIKdT8ucnA
+      - J51jLaX/sOVJP+vAbVeEBTRXBXrs1bn9itXnULIyjoELepCSkvnLIflA0nPU
       X-Ops-Authorization-5:
-      - sYb86VmLZBv92JXmvaPAuv4tjQAdknDW79lU92T4BbC/vDVDSIfjsKVIvt7r
+      - A52eSAtfUcaoE2I2sYgzJLDKyCv/ojMDh2QboSTco2nZCosP7R3V/ms53Px5
       X-Ops-Authorization-6:
-      - olistnO+hTHHIUTVRjlv59ogH+DSIKRIa8uY1Axs9w==
+      - Wc8tPyK6J9MtmZMUq0Ch8FAilst6FNKZ7fLz6TdUXQ==
       Host:
       - 127.0.0.1:8889
+      X-Remote-Request-Id:
+      - b08fdfa2-d149-48dd-aac4-ef86a3f2fd55
       X-Chef-Version:
-      - 11.8.2
+      - 11.12.8
       User-Agent:
-      - Chef Knife/11.8.2 (ruby-2.0.0-p247; ohai-6.20.0; x86_64-darwin12.4.0; +http://opscode.com)
+      - Chef Knife/11.12.8 (ruby-2.1.0-p0; ohai-7.0.4; x86_64-darwin13.0; +http://opscode.com)
   response:
     status:
       code: 200
-      message: OK
+      message: 'OK '
     headers:
       Content-Type:
       - application/json
       Server:
       - chef-zero
+      Date:
+      - Tue, 24 Jun 2014 18:00:09 GMT
       Content-Length:
       - '223'
+      Connection:
+      - Keep-Alive
     body:
       encoding: UTF-8
       string: |-
@@ -1700,13 +1644,14 @@ http_interactions:
           ]
         }
     http_version: 
-  recorded_at: Mon, 16 Dec 2013 17:07:19 GMT
+  recorded_at: Tue, 24 Jun 2014 18:00:09 GMT
 - request:
     method: put
-    uri: http://127.0.0.1:8889/nodes/host.example.com
+    uri: http://127.0.0.1:8889/nodes/localhost.lvh.me
     body:
       encoding: ASCII-8BIT
-      string: '{"name":"host.example.com","chef_environment":"_default","json_class":"Chef::Node","automatic":{},"normal":{},"chef_type":"node","default":{"os":"Linux","jenkins":{"cli":{"username":"","password":""}}},"override":{},"run_list":[]}'
+      string: "{\"name\":\"localhost.lvh.me\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{\"jenkins\":{\"cli\":{\"username\":\"ProvisionerUsername\",\"password\":\"secret\",\"jvm_options\":\"-Xmx50m
+        -Xms5m\"}}},\"override\":{},\"run_list\":[]}"
     headers:
       Content-Type:
       - application/json
@@ -1719,40 +1664,114 @@ http_interactions:
       X-Ops-Userid:
       - aslynko
       X-Ops-Timestamp:
-      - '2013-12-16T17:07:20Z'
+      - '2014-06-26T11:18:16Z'
       X-Ops-Content-Hash:
-      - eXiCc1jK/nYa+J9X9WIQB4O5dBM=
+      - WNZgqj726ZXmN3wIdA1n2nIdhTQ=
       X-Ops-Authorization-1:
-      - ckQk97GA+tT2B97psfF7RkLmAdZ2EhHJUB2/tc4LbzGssBKGxqw6oBPyszF+
+      - fXGdORsYPo3B3OD5IpKmQjowS7apCe4kBoAn01/DUC8tcKkaMlFXClUoXNij
       X-Ops-Authorization-2:
-      - mApWDa3IkIv0TBtzG8Bmh9KMR0080BaMlUELH8lXQ6m7vAxnE5x7d2V7zd5e
+      - D/fmveB++oe58nkLztUakHKVnGzIhDKkBdRDVETDRMVAwrNh2oYaSMtcxq1U
       X-Ops-Authorization-3:
-      - 9CgF1pxB21fCQ4g+MXcCyUFNGU8znad/CsyQNEn4AnmGPpvkG2sEITk+9SGq
+      - NLUZ1OwYOFVWOVkXVcGDy+GdzqYOwiVld5qxO8YWgxpOoqUwmZAgqdxWQ4LC
       X-Ops-Authorization-4:
-      - oTWB5SIvJZKuI7EgQf99tYjXOPxatvvqHoJi9o05OdO+Ma46tzuXyQztR8I2
+      - r7UazouEgQNZPjBqIehZuws2e6MJfcbMssm/zE5+DabMVEJEt2SAlGQh+vfG
       X-Ops-Authorization-5:
-      - OKHu7yQlOkxJsf+rmOinpH59SUw3Fs1X3mirEYapiBQEW3UjoGVwAO7ry7Qm
+      - CRy5KIkp6hw8XQuBHg+QaQ2lZ6l3eb2MGdTVv/an2WKXF7Lo1hb/TjlId61f
       X-Ops-Authorization-6:
-      - b97OCb6ovhXpyz1G9ykJmvlBeV9yjHX9r0c0/dNKMw==
+      - UjwBVt+hjHmrc7bwBMkzUuPuL9LAV3FXOQUOtlB64w==
       Host:
       - 127.0.0.1:8889
+      X-Remote-Request-Id:
+      - 7520cbc5-3edd-4410-8be6-85c594c66d4f
       Content-Length:
-      - '230'
+      - '263'
       X-Chef-Version:
-      - 11.8.2
+      - 11.12.8
       User-Agent:
-      - Chef Knife/11.8.2 (ruby-2.0.0-p247; ohai-6.20.0; x86_64-darwin12.4.0; +http://opscode.com)
+      - Chef Knife/11.12.8 (ruby-2.1.0-p0; ohai-7.0.4; x86_64-darwin13.0; +http://opscode.com)
   response:
     status:
       code: 404
-      message: Not Found
+      message: 'Not Found '
     headers:
       Content-Type:
       - application/json
       Server:
       - chef-zero
+      Date:
+      - Thu, 26 Jun 2014 11:18:16 GMT
       Content-Length:
       - '89'
+      Connection:
+      - Keep-Alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": [
+            "Object not found: http://127.0.0.1:8889/nodes/localhost.lvh.me"
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 26 Jun 2014 11:18:16 GMT
+- request:
+    method: put
+    uri: http://127.0.0.1:8889/nodes/host.example.com
+    body:
+      encoding: ASCII-8BIT
+      string: "{\"name\":\"host.example.com\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{},\"override\":{},\"run_list\":[]}"
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      X-Ops-Sign:
+      - algorithm=sha1;version=1.0;
+      X-Ops-Userid:
+      - aslynko
+      X-Ops-Timestamp:
+      - '2014-06-26T11:18:17Z'
+      X-Ops-Content-Hash:
+      - u5KTyZWskya0LCSBMeleakseK84=
+      X-Ops-Authorization-1:
+      - pe6HM0F1bebh65T/2ds/3NKTbHny2HaV8MArxB3iybQpX6EPyBOCQ5rUTMPq
+      X-Ops-Authorization-2:
+      - 06aEXT/4d7uRN1qZLOZFkQo8Fg4cZjvvOODIwxyUJH7Uer7OLfsP81Xo18Ps
+      X-Ops-Authorization-3:
+      - HLAMAlgmsMlQ4+XeSm+8aJAOKw+fdGQ6RzYzWsvjO97rqu/2jRkmQjDgXEEo
+      X-Ops-Authorization-4:
+      - H4P6gNBrUVFF1oeCiPsZW52bAxzyphJKsYAiaMJwSK5ROyEq7elJllcsugZ+
+      X-Ops-Authorization-5:
+      - oAbCbv73DEOIJUykORTXYXBVYlmaZ1hbv5GXO1QdpLcxmeGupfzinRAAyW1V
+      X-Ops-Authorization-6:
+      - x37+3legc3rov9Pox335mJwfxd7Am4aREQm/PspExw==
+      Host:
+      - 127.0.0.1:8889
+      X-Remote-Request-Id:
+      - 7520cbc5-3edd-4410-8be6-85c594c66d4f
+      Content-Length:
+      - '170'
+      X-Chef-Version:
+      - 11.12.8
+      User-Agent:
+      - Chef Knife/11.12.8 (ruby-2.1.0-p0; ohai-7.0.4; x86_64-darwin13.0; +http://opscode.com)
+  response:
+    status:
+      code: 404
+      message: 'Not Found '
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - chef-zero
+      Date:
+      - Thu, 26 Jun 2014 11:18:17 GMT
+      Content-Length:
+      - '89'
+      Connection:
+      - Keep-Alive
     body:
       encoding: UTF-8
       string: |-
@@ -1762,13 +1781,13 @@ http_interactions:
           ]
         }
     http_version: 
-  recorded_at: Mon, 16 Dec 2013 17:07:20 GMT
+  recorded_at: Thu, 26 Jun 2014 11:18:17 GMT
 - request:
     method: post
     uri: http://127.0.0.1:8889/nodes
     body:
       encoding: ASCII-8BIT
-      string: '{"name":"host.example.com","chef_environment":"_default","json_class":"Chef::Node","automatic":{},"normal":{},"chef_type":"node","default":{"os":"Linux","jenkins":{"cli":{"username":"","password":""}}},"override":{},"run_list":[]}'
+      string: "{\"name\":\"host.example.com\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{},\"override\":{},\"run_list\":[]}"
     headers:
       Content-Type:
       - application/json
@@ -1781,40 +1800,46 @@ http_interactions:
       X-Ops-Userid:
       - aslynko
       X-Ops-Timestamp:
-      - '2013-12-16T17:07:20Z'
+      - '2014-06-26T11:18:17Z'
       X-Ops-Content-Hash:
-      - eXiCc1jK/nYa+J9X9WIQB4O5dBM=
+      - u5KTyZWskya0LCSBMeleakseK84=
       X-Ops-Authorization-1:
-      - fpzAt9CNCxwOuD6G0TTps5kTVuBzQ4wKNyYVN4jK7icRw0xlUdc9kky0WPuU
+      - q3GgRJH3tT5rKy0Gh1/AWNOwNARffS8sZBQ60nB4kcde1v7TSOswUFszNdWL
       X-Ops-Authorization-2:
-      - efxZwv3szkAyjj1uPsSVhFCmgH8N8ZEHvwnkdeXjLQq+PEyH99CtOw9ye3mT
+      - e0/j4MQ7/wFpB3yXxTalZoSUlprSOU2YBJYuLkxPXxMfcuwg3aZIKfLmwwCM
       X-Ops-Authorization-3:
-      - c9gyTbgc+2Sd5eADZd+zEzwMFeiopuqcMVQb348p7NwbzSx6p/GM0d81zyk2
+      - 4NHHGJLX35wUAMb/0e5m4ltztbKg3Q3geya/p6aBrK2ONII4FL4W+HeRoWrz
       X-Ops-Authorization-4:
-      - CtOwxRFiogGeFwR9ge7EUnptnuSLHQuSFozk2ZXwcZypQD6eTAuvWOw7w6/v
+      - pHLRkogMWZjg9kyTQTFIbw2HKSiqQJvEEMwr6UoUlVLqzrA1kOVcABrTgILQ
       X-Ops-Authorization-5:
-      - aIT0Lp31KhnzS/2J7hDPU75HNYSt89AW4kP00E/p7a/DAJB/lPngEe+vWf+9
+      - DUzxZ4SEzCdkirXFQ2nKJ4gclNQVR8omBxdoftjD4g5kBK7pdPoeuo92FWm3
       X-Ops-Authorization-6:
-      - 3gMDSdgc1G5zV7e73bIDDDvJ/kHwsl9Y974TMlIZCQ==
+      - "/4490H69oTs8hMhjQngG5z20e3kNmmduKEYFg7emZg=="
       Host:
       - 127.0.0.1:8889
+      X-Remote-Request-Id:
+      - 7520cbc5-3edd-4410-8be6-85c594c66d4f
       Content-Length:
-      - '230'
+      - '170'
       X-Chef-Version:
-      - 11.8.2
+      - 11.12.8
       User-Agent:
-      - Chef Knife/11.8.2 (ruby-2.0.0-p247; ohai-6.20.0; x86_64-darwin12.4.0; +http://opscode.com)
+      - Chef Knife/11.12.8 (ruby-2.1.0-p0; ohai-7.0.4; x86_64-darwin13.0; +http://opscode.com)
   response:
     status:
       code: 201
-      message: Created
+      message: 'Created '
     headers:
       Content-Type:
       - application/json
       Server:
       - chef-zero
+      Date:
+      - Thu, 26 Jun 2014 11:18:17 GMT
       Content-Length:
       - '59'
+      Connection:
+      - Keep-Alive
     body:
       encoding: UTF-8
       string: |-
@@ -1822,7 +1847,7 @@ http_interactions:
           "uri": "http://127.0.0.1:8889/nodes/host.example.com"
         }
     http_version: 
-  recorded_at: Mon, 16 Dec 2013 17:07:20 GMT
+  recorded_at: Thu, 26 Jun 2014 11:18:17 GMT
 - request:
     method: get
     uri: http://127.0.0.1:8889/nodes/host.example.com
@@ -1839,38 +1864,44 @@ http_interactions:
       X-Ops-Userid:
       - aslynko
       X-Ops-Timestamp:
-      - '2013-12-16T17:07:20Z'
+      - '2014-06-26T11:18:17Z'
       X-Ops-Content-Hash:
       - 2jmj7l5rSw0yVb/vlWAYkK/YBwk=
       X-Ops-Authorization-1:
-      - Ta77h7dwmT//lFSWE1LpW3VhUaISQWtBOZXwI2/qv0r1AzG3Nkmno/4ol1uG
+      - AKE3XGwn02Qx6GHBNuNszfS2XEiHCYh+NTNJStvzvHMHTHvBSrQzo6FaM0tn
       X-Ops-Authorization-2:
-      - +Wn7H5d0Z7tCgsRy+igGPt3x2v31yNGYPe28ZQqB1+1EqccE7jnGVv3JpFvc
+      - DnRsVy7hAZwB7Z+dAHf+aGZz56/ivtslde1+T6ENI5GmorWnF5oTUpP1JuJ7
       X-Ops-Authorization-3:
-      - 2R5wAiHdbuCoUpaGu4IrQ6XYlGzeU772v1Z10ZaOBr/UPsA6XJZumd33NqBG
+      - W2rTZ168gnW7xda4iCxBtEVnB9EP6TPW+1I+sWNX6FMl5pO3x5Ipgb+x7wAj
       X-Ops-Authorization-4:
-      - irQrT9aRfVyIB5PfHb2eaUf+6x4pLJAss/73qSJ1yyNTXdXlZhiX7ZIMMJGH
+      - TAARf5udg9LhNhjkXladZOvy+fSy6s7ngLGmPjgETxIXEwfIFPULxk//MqZG
       X-Ops-Authorization-5:
-      - j60F3h+CsBz+g8EoGZXWLfH9OkUtVPCYGrafLCkG6iL3UmHl2bcBzK9X1bw0
+      - pA5Ip3MaBp/QRwpTawMj42F/ydn+brgDstHeKre59XGyWI3NPbwPt2K6Ud3v
       X-Ops-Authorization-6:
-      - dFxKvOR+Dt/RlhUuTjpnquz8JPSPE9+Oi5IuluTJmw==
+      - wlnF5hxb9HU3vlusLRwlKrp3Z1ASlHa3MRfYgKnTbw==
       Host:
       - 127.0.0.1:8889
+      X-Remote-Request-Id:
+      - 7520cbc5-3edd-4410-8be6-85c594c66d4f
       X-Chef-Version:
-      - 11.8.2
+      - 11.12.8
       User-Agent:
-      - Chef Knife/11.8.2 (ruby-2.0.0-p247; ohai-6.20.0; x86_64-darwin12.4.0; +http://opscode.com)
+      - Chef Knife/11.12.8 (ruby-2.1.0-p0; ohai-7.0.4; x86_64-darwin13.0; +http://opscode.com)
   response:
     status:
       code: 200
-      message: OK
+      message: 'OK '
     headers:
       Content-Type:
       - application/json
       Server:
       - chef-zero
+      Date:
+      - Thu, 26 Jun 2014 11:18:17 GMT
       Content-Length:
-      - '335'
+      - '223'
+      Connection:
+      - Keep-Alive
     body:
       encoding: UTF-8
       string: |-
@@ -1884,13 +1915,6 @@ http_interactions:
           },
           "chef_type": "node",
           "default": {
-            "os": "Linux",
-            "jenkins": {
-              "cli": {
-                "username": "",
-                "password": ""
-              }
-            }
           },
           "override": {
           },
@@ -1899,5 +1923,5 @@ http_interactions:
           ]
         }
     http_version: 
-  recorded_at: Mon, 16 Dec 2013 17:07:20 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Thu, 26 Jun 2014 11:18:17 GMT
+recorded_with: VCR 2.9.2

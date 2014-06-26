@@ -4,132 +4,115 @@ require 'rest_client'
 require 'chef'
 require 'chef/knife'
 require 'pry'
+require 'wonga/daemon/publisher'
 
 describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
-  let(:json_string_upper_case) {"{\"busyExecutors\":0,\"computer\":[{\"actions\":[],\"displayName\":\"master\",\"executors\":[{},{},{},{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":false,\"launchSupported\":true,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":{\"availablePhysicalMemory\":976572416,\"availableSwapSpace\":0,\"totalPhysicalMemory\":7812575232,\"totalSwapSpace\":0},\"hudson.node_monitors.ArchitectureMonitor\":\"Linux (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":0},\"hudson.node_monitors.TemporarySpaceMonitor\":{\"path\":\"/tmp\",\"size\":65203343360},\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"04.7\",\"hudson.node_monitors.DiskSpaceMonitor\":{\"path\":\"/var/lib/jenkins\",\"size\":65203331072},\"hudson.node_monitors.ClockMonitor\":{\"diff\":0}},\"numExecutors\":4,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000001.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000002.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000006.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000008.example.com\",\"executors\":[{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":\"Windows Server 2008 R2 (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":535},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"-1.0\",\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":{\"diff\":-15535}},\"numExecutors\":1,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false}],\"displayName\":\"nodes\",\"totalExecutors\":5}"}
-  let(:json_string_down_case) {"{\"busyExecutors\":0,\"computer\":[{\"actions\":[],\"displayName\":\"master\",\"executors\":[{},{},{},{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":false,\"launchSupported\":true,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":{\"availablePhysicalMemory\":976572416,\"availableSwapSpace\":0,\"totalPhysicalMemory\":7812575232,\"totalSwapSpace\":0},\"hudson.node_monitors.ArchitectureMonitor\":\"Linux (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":0},\"hudson.node_monitors.TemporarySpaceMonitor\":{\"path\":\"/tmp\",\"size\":65203343360},\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"04.7\",\"hudson.node_monitors.DiskSpaceMonitor\":{\"path\":\"/var/lib/jenkins\",\"size\":65203331072},\"hudson.node_monitors.ClockMonitor\":{\"diff\":0}},\"numExecutors\":4,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000001.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000002.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000006.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000008.example.com\",\"executors\":[{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":\"Windows Server 2008 R2 (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":535},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"-1.0\",\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":{\"diff\":-15535}},\"numExecutors\":1,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false}],\"displayName\":\"nodes\",\"totalExecutors\":5}"}
-  let(:message) { {"hostname" => "jenkins-linux-agent", "domain" => "vagrant", "server_ip" => server, "server_port" => "8080"} }
-  let(:server) { "localhost.lvh.me" }
-  let(:publisher) { instance_double('Publisher').as_null_object }
-  let(:node_params) { { "username" => "ProvisionerUsername", "password" => "secret", "jvm_options" => "-Xmx50m -Xms5m" } }
-  let(:node_empty_params) { { "username" => '', "password" => '' } }
-  let(:node_nil_params) { { "username" => nil, "password" => nil } }
-  subject { described_class.new(publisher, double.as_null_object) }
-  it_behaves_like 'handler'
-  
-  describe "#send_delete" do
-    it "sends the delete message" do
-      VCR.use_cassette('synopsis') do
-        RestClient.should_receive(:get).and_return(json_string_upper_case)
-        subject.stub(:get_node).and_return("jenkins-linux-agent")
-        subject.should_receive(:jenkins_username_and_password).with(server).and_return(
-          { username: "ProvisionerUsername", password: "secret" }
-        )
-        expect{subject.send_delete(message)}.to raise_error(RestClient::Found) # it gets a 302 error which is ok because it redirects after deletion
-      end
-    end
+  let(:json_string) { "{\"busyExecutors\":0,\"computer\":[{\"actions\":[],\"displayName\":\"master\",\"executors\":[{},{},{},{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":false,\"launchSupported\":true,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":{\"availablePhysicalMemory\":976572416,\"availableSwapSpace\":0,\"totalPhysicalMemory\":7812575232,\"totalSwapSpace\":0},\"hudson.node_monitors.ArchitectureMonitor\":\"Linux (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":0},\"hudson.node_monitors.TemporarySpaceMonitor\":{\"path\":\"/tmp\",\"size\":65203343360},\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"04.7\",\"hudson.node_monitors.DiskSpaceMonitor\":{\"path\":\"/var/lib/jenkins\",\"size\":65203331072},\"hudson.node_monitors.ClockMonitor\":{\"diff\":0}},\"numExecutors\":4,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000001.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000002.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000006.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000008.example.com\",\"executors\":[{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":\"Windows Server 2008 R2 (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":535},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"-1.0\",\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":{\"diff\":-15535}},\"numExecutors\":1,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false}],\"displayName\":\"nodes\",\"totalExecutors\":5}" }
+  let(:server) { 'localhost.lvh.me' }
+  let(:publisher) { instance_double(Wonga::Daemon::Publisher) }
+  let(:node_params) { { 'username' => 'ProvisionerUsername', 'password' => 'secret', 'jvm_options' => '-Xmx50m -Xms5m' } }
+  let(:node) do
+    node = Chef::Node.new
+    node.name(server)
+    node.default[:jenkins][:cli] = node_params
+    node
   end
-  
-  describe "#handle_message" do  
-    it "publishes to the topic" do
-      RestClient.stub(:get).and_return(json_string_upper_case)
-      subject.stub(:get_node).and_return("jenkins-linux-agent")
-      RestClient.stub(:post)
-      publisher.should_receive(:publish)
-      VCR.use_cassette('synopsis', record: :all) do # bypass VCR and use chef-zero server
-        node = Chef::Node.new
-        node.name(server)
-        node.default[:jenkins][:cli] = node_params
-        node.save
-        subject.stub(:get_api_token)
-        
-        subject.handle_message(message)
-      end
+
+  subject(:handler) { described_class.new(publisher, double.as_null_object) }
+
+  it_behaves_like 'handler'
+
+  describe '#handle_message' do
+    let(:message) { { 'hostname' => 'jenkins-linux-agent', 'domain' => 'vagrant', 'server_ip' => server, 'server_port' => '8080' } }
+
+    before :each do
+      allow(RestClient).to receive(:get).and_return(json_string)
+      allow(subject).to receive(:jenkins_username_and_password).with(server).and_return(
+        username: 'ProvisionerUsername', password: 'secret'
+      )
+      allow(subject).to receive(:get_api_token)
     end
-    
-    it "can publish to the topic without authentication" do
-      RestClient.stub(:get).and_return(json_string_upper_case)
-      subject.stub(:get_node).and_return("jenkins-linux-agent")
-      RestClient.stub(:post)
-      publisher.should_receive(:publish)
-      VCR.use_cassette('synopsis', record: :all) do # bypass VCR and use chef-zero server
-        node = Chef::Node.new
-        node.name(server)
-        node.save
-        subject.stub(:get_api_token)
-        
-        subject.handle_message(message)
-      end
+
+    it 'publishes to the topic' do
+      allow(subject).to receive(:get_node).and_return('jenkins-linux-agent')
+      allow(RestClient).to receive(:post)
+      expect(publisher).to receive(:publish)
+      node.save
+      subject.handle_message(message)
     end
-    
-    it "calls send_delete" do
-      subject.should_receive(:send_delete)
+
+    it 'can publish to the topic without authentication' do
+      allow(RestClient).to receive(:get).and_return(json_string)
+      allow(subject).to receive(:get_node).and_return('jenkins-linux-agent')
+      allow(RestClient).to receive(:post)
+      expect(publisher).to receive(:publish)
+      node.save
+      allow(subject).to receive(:get_api_token)
+
       subject.handle_message(message)
     end
   end
-  
-  describe "#get_node" do
-    it "finds an upper case node" do
-      subject.get_node({"hostname" => "agent-000000001", "domain" => "example.com"}, json_string_upper_case).should eq "AGENT-000000001"
-    end
-    
-    it "finds a down case node" do
-      subject.get_node({"hostname" => "agent-000000001", "domain" => "example.com"}, json_string_down_case).should eq "agent-000000001"
-    end
-  end
-  
-  describe "#jenkins_username_and_password" do
-    it "returns username and password of a jenkins server" do
-      VCR.use_cassette('synopsis', record: :all) do # bypass VCR and use chef-zero server
-        node = Chef::Node.new
-        node.name("host.example.com")
-        node.default['os'] = "Linux"
-        node.default[:jenkins][:cli] = node_params
-        node.save
-        subject.jenkins_username_and_password("host.example.com").should eq({ username: "ProvisionerUsername", password: "secret" })
-      end
-    end
-    
-    it "handles nodes with empty username and password" do
-      VCR.use_cassette('synopsis', :record => :all) do
-        node = Chef::Node.new
-        node.name("host.example.com")
-        node.default['os'] = "Linux"
-        node.default[:jenkins][:cli] = node_empty_params
-        node.save
-        subject.jenkins_username_and_password("host.example.com").should be_nil
+
+  describe '#get_node' do
+    subject { handler.get_node({ 'hostname' => 'agent-000000001', 'domain' => 'example.com' }, json_string) }
+
+    context "when node is saved in uppercase" do
+      it 'finds an upper case node' do
+        expect(subject).to eq 'AGENT-000000001'
       end
     end
 
-    it "handles nodes with nil username and password" do
-      VCR.use_cassette('synopsis', :record => :all) do
-        node = Chef::Node.new
-        node.name("host.example.com")
-        node.default['os'] = "Linux"
-        node.default[:jenkins][:cli] = node_nil_params
-        node.save
-        subject.jenkins_username_and_password("host.example.com").should be_nil
-      end
-    end
+    context 'when node is saved in downcase' do
+      let(:json_string) { "{\"busyExecutors\":0,\"computer\":[{\"actions\":[],\"displayName\":\"master\",\"executors\":[{},{},{},{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":false,\"launchSupported\":true,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":{\"availablePhysicalMemory\":976572416,\"availableSwapSpace\":0,\"totalPhysicalMemory\":7812575232,\"totalSwapSpace\":0},\"hudson.node_monitors.ArchitectureMonitor\":\"Linux (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":0},\"hudson.node_monitors.TemporarySpaceMonitor\":{\"path\":\"/tmp\",\"size\":65203343360},\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"04.7\",\"hudson.node_monitors.DiskSpaceMonitor\":{\"path\":\"/var/lib/jenkins\",\"size\":65203331072},\"hudson.node_monitors.ClockMonitor\":{\"diff\":0}},\"numExecutors\":4,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000001.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000002.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000006.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000008.example.com\",\"executors\":[{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":\"Windows Server 2008 R2 (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":535},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"-1.0\",\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":{\"diff\":-15535}},\"numExecutors\":1,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false}],\"displayName\":\"nodes\",\"totalExecutors\":5}" }
 
-    it "handles nodes with no username and password defined" do
-      VCR.use_cassette('synopsis', :record => :all) do
-        node = Chef::Node.new
-        node.name("host.example.com")
-        node.save
-        subject.jenkins_username_and_password("host.example.com").should be_nil
+      it 'finds a down case node' do
+        expect(subject).to eq 'agent-000000001'
       end
     end
   end
-  
-  describe "#get_api_token" do
-    it "gets the token by connecting to the server and by scraping the value of the API token" do
+
+  describe '#jenkins_username_and_password' do
+    before(:each) do
+      node.save
+    end
+
+    subject { handler.jenkins_username_and_password(server) }
+
+    it 'returns username and password of a jenkins server' do
+      expect(subject).to eq(username: 'ProvisionerUsername', password: 'secret')
+    end
+
+    context 'when node has empty params' do
+      let(:node_params) { { 'username' => '', 'password' => '' } }
+
+      it { is_expected.to be nil }
+    end
+
+    context 'when node has nil params' do
+      let(:node_params) { { 'username' => nil, 'password' => nil } }
+
+      it { is_expected.to be nil }
+    end
+
+    context 'when node has no params' do
+      let(:node) do
+        node = Chef::Node.new
+        node.name(server)
+        node
+      end
+
+      it { is_expected.to be nil }
+    end
+  end
+
+  describe '#get_api_token' do
+    it 'gets the token by connecting to the server and by scraping the value of the API token' do
       VCR.use_cassette('synopsis') do
-        username = "ProvisionerUsername"
-        password = "secret"
-        server_ip = "localhost.lvh.me"
+        username = 'ProvisionerUsername'
+        password = 'secret'
+        server_ip = 'localhost.lvh.me'
         server_port = 8080
-        subject.get_api_token(server_ip, server_port, username, password).should eq "bfa4fe165a71ba7c16cd0865e88a6b30"
+        expect(subject.get_api_token(server_ip, server_port, username, password)).to eq 'bfa4fe165a71ba7c16cd0865e88a6b30'
       end
     end
   end
