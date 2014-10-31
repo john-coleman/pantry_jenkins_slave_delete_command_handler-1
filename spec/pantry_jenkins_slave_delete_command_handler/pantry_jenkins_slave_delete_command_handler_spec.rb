@@ -9,6 +9,7 @@ require 'wonga/daemon/publisher'
 describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
   let(:json_string) { "{\"busyExecutors\":0,\"computer\":[{\"actions\":[],\"displayName\":\"master\",\"executors\":[{},{},{},{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":false,\"launchSupported\":true,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":{\"availablePhysicalMemory\":976572416,\"availableSwapSpace\":0,\"totalPhysicalMemory\":7812575232,\"totalSwapSpace\":0},\"hudson.node_monitors.ArchitectureMonitor\":\"Linux (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":0},\"hudson.node_monitors.TemporarySpaceMonitor\":{\"path\":\"/tmp\",\"size\":65203343360},\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"04.7\",\"hudson.node_monitors.DiskSpaceMonitor\":{\"path\":\"/var/lib/jenkins\",\"size\":65203331072},\"hudson.node_monitors.ClockMonitor\":{\"diff\":0}},\"numExecutors\":4,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000001.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000002.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000006.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000008.example.com\",\"executors\":[{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":\"Windows Server 2008 R2 (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":535},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"-1.0\",\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":{\"diff\":-15535}},\"numExecutors\":1,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false}],\"displayName\":\"nodes\",\"totalExecutors\":5}" }
   let(:server) { 'localhost.lvh.me' }
+  let(:slave) { 'jenkins-linux-agent.vagrant' }
   let(:publisher) { instance_double(Wonga::Daemon::Publisher) }
   let(:node_params) { { 'username' => 'ProvisionerUsername', 'password' => 'secret', 'jvm_options' => '-Xmx50m -Xms5m' } }
   let(:node) do
@@ -23,12 +24,15 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
   it_behaves_like 'handler'
 
   describe '#handle_message' do
-    let(:message) { { 'hostname' => 'jenkins-linux-agent', 'domain' => 'vagrant', 'server_ip' => server, 'server_port' => '8080' } }
+    let(:message) { { 'hostname' => 'jenkins-linux-agent', 'domain' => 'vagrant', 'server_fqdn' => server, 'server_port' => '8080'} }
 
     before :each do
       allow(RestClient).to receive(:get).and_return(json_string)
       allow(subject).to receive(:jenkins_username_and_password).with(server).and_return(
-        username: 'ProvisionerUsername', password: 'secret'
+        username: 'server_test', password: 'server_secret'
+      )
+      allow(subject).to receive(:jenkins_username_and_password).with(slave).and_return(
+        username: 'slave_test', password: 'slave_secret'
       )
       allow(subject).to receive(:get_api_token)
     end
@@ -48,6 +52,35 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
       expect(publisher).to receive(:publish)
       node.save
       allow(subject).to receive(:get_api_token)
+
+      subject.handle_message(message)
+    end
+
+    it 'uses server credentials if exists' do
+      allow(subject).to receive(:get_node).and_return('jenkins-linux-agent')
+      allow(RestClient).to receive(:post)
+      expect(publisher).to receive(:publish)
+      node.save
+
+      expect(subject).to receive(:get_api_token).with(message["server_fqdn"],
+                                                      message["server_port"],
+                                                      'server_test',
+                                                      'server_secret')
+
+      subject.handle_message(message)
+    end
+
+    it 'uses slave credentials if server credentials does not exist' do
+      allow(subject).to receive(:get_node).and_return('jenkins-linux-agent')
+      allow(subject).to receive(:jenkins_username_and_password).with(server).and_return(nil)
+      allow(RestClient).to receive(:post)
+      expect(publisher).to receive(:publish)
+      node.save
+
+      expect(subject).to receive(:get_api_token).with(message["server_fqdn"],
+                                                      message["server_port"],
+                                                      'slave_test',
+                                                      'slave_secret')
 
       subject.handle_message(message)
     end

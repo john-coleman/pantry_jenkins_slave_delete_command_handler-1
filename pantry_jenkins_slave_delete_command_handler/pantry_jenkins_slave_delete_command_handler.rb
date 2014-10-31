@@ -20,18 +20,18 @@ module Wonga
 
       def send_delete(message)
         server_port = message['server_port'] || '80'
-        result = RestClient.get("http://#{message['server_ip']}:#{server_port}/computer/api/json")
+        result = RestClient.get("http://#{message['server_fqdn']}:#{server_port}/computer/api/json")
         node = get_node(message, result)
         return true if node.nil?
-        credentials = jenkins_username_and_password(message["server_ip"])
+        credentials = jenkins_username_and_password(message["server_fqdn"]) || jenkins_username_and_password(message["hostname"] + "." + message["domain"])
 
         if credentials
-          api_token = get_api_token(message["server_ip"], message["server_port"], credentials[:username], credentials[:password])
+          api_token = get_api_token(message["server_fqdn"], message["server_port"], credentials[:username], credentials[:password])
           @logger.info "Deleting #{node} slave with authentication"
-          RestClient.post("http://#{credentials[:username]}:#{api_token}@#{message['server_ip']}:#{server_port}/computer/#{node}.#{message["domain"]}/doDelete", {})
+          RestClient.post("http://#{credentials[:username]}:#{api_token}@#{message['server_fqdn']}:#{server_port}/computer/#{node}.#{message["domain"]}/doDelete", {})
         else
           @logger.info "Deleting #{node} slave without authentication"
-          RestClient.post("http://#{message['server_ip']}:#{server_port}/computer/#{node}.#{message["domain"]}/doDelete", {})
+          RestClient.post("http://#{message['server_fqdn']}:#{server_port}/computer/#{node}.#{message["domain"]}/doDelete", {})
         end
       end
 
@@ -55,9 +55,9 @@ module Wonga
         end
       end
 
-      def get_api_token(server_ip, server_port = 80, username, password)
-        url = "http://#{server_ip}:#{server_port}/login"
-        api_url = "http://#{server_ip}:#{server_port}/me/configure"
+      def get_api_token(server_fqdn, server_port = 80, username, password)
+        url = "http://#{server_fqdn}:#{server_port}/login"
+        api_url = "http://#{server_fqdn}:#{server_port}/me/configure"
         agent = Mechanize.new
         agent.get(url)
         form = agent.page.forms.last
