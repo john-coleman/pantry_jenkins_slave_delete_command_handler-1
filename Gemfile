@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'pantry_daemon_common', git: 'git@github.com:wongatech/pantry_daemon_common.git', tag: 'v0.2.6'
+gem 'pantry_daemon_common', git: 'git@github.com:wongatech/pantry_daemon_common.git'
 gem 'chef', '~> 11.12'
 gem 'mechanize'
 gem 'nokogiri'
