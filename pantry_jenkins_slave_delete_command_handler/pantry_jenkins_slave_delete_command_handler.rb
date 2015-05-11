@@ -23,31 +23,32 @@ module Wonga
         result = RestClient.get("http://#{message['server_fqdn']}:#{server_port}/computer/api/json")
         node = get_node(message, result)
         return true if node.nil?
-        credentials = jenkins_username_and_password(message["server_fqdn"]) || jenkins_username_and_password(message["hostname"] + "." + message["domain"])
+        credentials = jenkins_username_and_password(message['server_fqdn']) || jenkins_username_and_password(message['hostname'] + '.' + message['domain'])
 
         if credentials
-          api_token = get_api_token(message["server_fqdn"], message["server_port"], credentials[:username], credentials[:password])
+          api_token = get_api_token(message['server_fqdn'], message['server_port'], credentials[:username], credentials[:password])
+          jenkins_slave_node_url = "#{message['server_fqdn']}:#{server_port}/computer/#{node}.#{message['domain']}"
           @logger.info "Deleting #{node} slave with authentication"
-          RestClient.post("http://#{credentials[:username]}:#{api_token}@#{message['server_fqdn']}:#{server_port}/computer/#{node}.#{message["domain"]}/doDelete", {})
+          RestClient.post("http://#{credentials[:username]}:#{api_token}@#{jenkins_slave_node_url}/doDelete", {})
         else
           @logger.info "Deleting #{node} slave without authentication"
-          RestClient.post("http://#{message['server_fqdn']}:#{server_port}/computer/#{node}.#{message["domain"]}/doDelete", {})
+          RestClient.post("http://#{jenkins_slave_node_url}/doDelete", {})
         end
       end
 
       def get_node(message, result)
         h = JSON.parse(result)
-        computers = h["computer"].map {|c| c["displayName"]}
-        return message["hostname"].upcase if computers.include?("#{message["hostname"].upcase}.#{message["domain"]}")
-        return message["hostname"] if computers.include?("#{message["hostname"]}.#{message["domain"]}")
-        @logger.info "Node name not found" and nil
+        computers = h['computer'].map { |c| c['displayName'] }
+        return message['hostname'].upcase if computers.include?("#{message['hostname'].upcase}.#{message['domain']}")
+        return message['hostname'] if computers.include?("#{message['hostname']}.#{message['domain']}")
+        @logger.info('Node name not found') && nil
       end
 
       def jenkins_username_and_password(name)
         node = Chef::Node.load(name)
         begin
-          unless node["jenkins"]["cli"]["username"].empty?
-            { username: node["jenkins"]["cli"]["username"], password: node["jenkins"]["cli"]["password"] }
+          unless node['jenkins']['cli']['username'].empty?
+            { username: node['jenkins']['cli']['username'], password: node['jenkins']['cli']['password'] }
           end
         rescue NoMethodError => e
           @logger.info "Cannot find username and password of Jenkins server: #{e}"
@@ -65,7 +66,7 @@ module Wonga
         form.j_password = password
         form.submit
         agent.get(api_url)
-        api_token = agent.page.search("#apiToken").first.attributes["value"].value
+        agent.page.search('#apiToken').first.attributes['value'].value
       end
     end
   end

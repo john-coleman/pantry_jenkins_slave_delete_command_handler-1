@@ -1,12 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'pantry_daemon_common', git: 'git@github.com:wongatech/pantry_daemon_common.git'
-gem 'chef', '~> 11.12'
+gem 'chef', '~> 11.18'
 gem 'mechanize'
 gem 'nokogiri'
+gem 'aws-sdk-v1'
 
 group :development do
   gem 'guard-rspec'
+  gem 'guard-bundler'
 end
 
 group :test, :development do
@@ -15,6 +17,7 @@ group :test, :development do
   gem 'rspec'
   gem 'chef-zero'
   gem 'rake'
+  gem 'rubocop'
 end
 
 group :test do

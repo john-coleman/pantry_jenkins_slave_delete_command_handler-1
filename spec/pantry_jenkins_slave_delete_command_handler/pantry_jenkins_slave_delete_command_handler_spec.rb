@@ -3,11 +3,193 @@ require_relative '../../pantry_jenkins_slave_delete_command_handler/pantry_jenki
 require 'rest_client'
 require 'chef'
 require 'chef/knife'
-require 'pry'
 require 'wonga/daemon/publisher'
 
-describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
-  let(:json_string) { "{\"busyExecutors\":0,\"computer\":[{\"actions\":[],\"displayName\":\"master\",\"executors\":[{},{},{},{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":false,\"launchSupported\":true,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":{\"availablePhysicalMemory\":976572416,\"availableSwapSpace\":0,\"totalPhysicalMemory\":7812575232,\"totalSwapSpace\":0},\"hudson.node_monitors.ArchitectureMonitor\":\"Linux (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":0},\"hudson.node_monitors.TemporarySpaceMonitor\":{\"path\":\"/tmp\",\"size\":65203343360},\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"04.7\",\"hudson.node_monitors.DiskSpaceMonitor\":{\"path\":\"/var/lib/jenkins\",\"size\":65203331072},\"hudson.node_monitors.ClockMonitor\":{\"diff\":0}},\"numExecutors\":4,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000001.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000002.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000006.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"AGENT-000000008.example.com\",\"executors\":[{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":\"Windows Server 2008 R2 (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":535},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"-1.0\",\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":{\"diff\":-15535}},\"numExecutors\":1,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false}],\"displayName\":\"nodes\",\"totalExecutors\":5}" }
+RSpec.describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
+  let(:json_string) do
+    {
+      'busyExecutors' => 0,
+      'computer' => [
+        {
+          'actions' => [],
+          'displayName' => 'master',
+          'executors' => [{}, {}, {}, {}],
+          'icon' => 'computer.png',
+          'idle' => true,
+          'jnlpAgent' => false,
+          'launchSupported' => true,
+          'loadStatistics' => {},
+          'manualLaunchAllowed' => true,
+          'monitorData' => {
+            'hudson.node_monitors.SwapSpaceMonitor' => {
+              'availablePhysicalMemory' => 976_572_416,
+              'availableSwapSpace' => 0,
+              'totalPhysicalMemory' => 7_812_575_232,
+              'totalSwapSpace' => 0
+            },
+            'hudson.node_monitors.ArchitectureMonitor' => 'Linux (amd64)',
+            'hudson.node_monitors.ResponseTimeMonitor' => {
+              'average' => 0
+            },
+            'hudson.node_monitors.TemporarySpaceMonitor' => {
+              'path' => '/tmp',
+              'size' => 65_203_343_360
+            },
+            'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+            'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => '04.7',
+            'hudson.node_monitors.DiskSpaceMonitor' => {
+              'path' => '/var/lib/jenkins',
+              'size' => 65_203_331_072
+            },
+            'hudson.node_monitors.ClockMonitor' => {
+              'diff' => 0
+            }
+
+          },
+          'numExecutors' => 4,
+          'offline' => false,
+          'offlineCause' => nil,
+          'offlineCauseReason' => '',
+          'oneOffExecutors' => [
+          ],
+          'temporarilyOffline' => false
+        },
+        {
+          'actions' => [
+          ],
+          'displayName' => 'AGENT-000000001.example.com',
+          'executors' => [{}],
+          'icon' => 'computer-x.png',
+          'idle' => true,
+          'jnlpAgent' => true,
+          'launchSupported' => false,
+          'loadStatistics' => {
+
+          },
+          'manualLaunchAllowed' => true,
+          'monitorData' => {
+            'hudson.node_monitors.SwapSpaceMonitor' => nil,
+            'hudson.node_monitors.ArchitectureMonitor' => nil,
+            'hudson.node_monitors.ResponseTimeMonitor' => {
+              'average' => 5000
+            },
+            'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+            'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+            'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => nil,
+            'hudson.node_monitors.DiskSpaceMonitor' => nil,
+            'hudson.node_monitors.ClockMonitor' => nil
+          },
+          'numExecutors' => 1,
+          'offline' => true,
+          'offlineCause' => {
+
+          },
+          'offlineCauseReason' => "<span class=error style='display:inline-block'>Time out for last 5 try</span>",
+          'oneOffExecutors' => [
+          ],
+          'temporarilyOffline' => false
+        },
+        {
+          'actions' => [
+          ],
+          'displayName' => 'AGENT-000000002.example.com',
+          'executors' => [{}],
+          'icon' => 'computer-x.png',
+          'idle' => true,
+          'jnlpAgent' => true,
+          'launchSupported' => false,
+          'loadStatistics' => {},
+          'manualLaunchAllowed' => true,
+          'monitorData' => {
+            'hudson.node_monitors.SwapSpaceMonitor' => nil,
+            'hudson.node_monitors.ArchitectureMonitor' => nil,
+            'hudson.node_monitors.ResponseTimeMonitor' => {
+              'average' => 5000
+            },
+            'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+            'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+            'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => nil,
+            'hudson.node_monitors.DiskSpaceMonitor' => nil,
+            'hudson.node_monitors.ClockMonitor' => nil
+          },
+          'numExecutors' => 1,
+          'offline' => true,
+          'offlineCause' => {},
+          'offlineCauseReason' => "<span class=error style='display:inline-block'>Time out for last 5 try</span>",
+          'oneOffExecutors' => [],
+          'temporarilyOffline' => false
+        },
+        {
+          'actions' => [],
+          'displayName' => 'AGENT-000000006.example.com',
+          'executors' => [{}],
+          'icon' => 'computer-x.png',
+          'idle' => true,
+          'jnlpAgent' => true,
+          'launchSupported' => false,
+          'loadStatistics' => {
+
+          },
+          'manualLaunchAllowed' => true,
+          'monitorData' => {
+            'hudson.node_monitors.SwapSpaceMonitor' => nil,
+            'hudson.node_monitors.ArchitectureMonitor' => nil,
+            'hudson.node_monitors.ResponseTimeMonitor' => {
+              'average' => 5000
+            },
+            'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+            'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+            'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => nil,
+            'hudson.node_monitors.DiskSpaceMonitor' => nil,
+            'hudson.node_monitors.ClockMonitor' => nil
+          },
+          'numExecutors' => 1,
+          'offline' => true,
+          'offlineCause' => {
+
+          },
+          'offlineCauseReason' => "<span class=error style='display:inline-block'>Time out for last 5 try</span>",
+          'oneOffExecutors' => [
+          ],
+          'temporarilyOffline' => false
+        },
+        {
+          'actions' => [],
+          'displayName' => 'AGENT-000000008.example.com',
+          'executors' => [{}],
+          'icon' => 'computer.png',
+          'idle' => true,
+          'jnlpAgent' => true,
+          'launchSupported' => false,
+          'loadStatistics' => {},
+          'manualLaunchAllowed' => true,
+          'monitorData' => {
+            'hudson.node_monitors.SwapSpaceMonitor' => nil,
+            'hudson.node_monitors.ArchitectureMonitor' => 'Windows Server 2008 R2 (amd64)',
+            'hudson.node_monitors.ResponseTimeMonitor' => {
+              'average' => 535
+            },
+            'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+            'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+            'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => '-1.0',
+            'hudson.node_monitors.DiskSpaceMonitor' => nil,
+            'hudson.node_monitors.ClockMonitor' => {
+              'diff' => -15535
+            }
+          },
+          'numExecutors' => 1,
+          'offline' => false,
+          'offlineCause' => nil,
+          'offlineCauseReason' => '',
+          'oneOffExecutors' => [],
+          'temporarilyOffline' => false
+        }
+      ],
+      'displayName' => 'nodes',
+      'totalExecutors' => 5
+    }.to_json
+  end
+
   let(:server) { 'localhost.lvh.me' }
   let(:slave) { 'jenkins-linux-agent.vagrant' }
   let(:publisher) { instance_double(Wonga::Daemon::Publisher) }
@@ -24,7 +206,7 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
   it_behaves_like 'handler'
 
   describe '#handle_message' do
-    let(:message) { { 'hostname' => 'jenkins-linux-agent', 'domain' => 'vagrant', 'server_fqdn' => server, 'server_port' => '8080'} }
+    let(:message) { { 'hostname' => 'jenkins-linux-agent', 'domain' => 'vagrant', 'server_fqdn' => server, 'server_port' => '8080' } }
 
     before :each do
       allow(RestClient).to receive(:get).and_return(json_string)
@@ -62,8 +244,8 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
       expect(publisher).to receive(:publish)
       node.save
 
-      expect(subject).to receive(:get_api_token).with(message["server_fqdn"],
-                                                      message["server_port"],
+      expect(subject).to receive(:get_api_token).with(message['server_fqdn'],
+                                                      message['server_port'],
                                                       'server_test',
                                                       'server_secret')
 
@@ -77,8 +259,8 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
       expect(publisher).to receive(:publish)
       node.save
 
-      expect(subject).to receive(:get_api_token).with(message["server_fqdn"],
-                                                      message["server_port"],
+      expect(subject).to receive(:get_api_token).with(message['server_fqdn'],
+                                                      message['server_port'],
                                                       'slave_test',
                                                       'slave_secret')
 
@@ -89,14 +271,182 @@ describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
   describe '#get_node' do
     subject { handler.get_node({ 'hostname' => 'agent-000000001', 'domain' => 'example.com' }, json_string) }
 
-    context "when node is saved in uppercase" do
+    context 'when node is saved in uppercase' do
       it 'finds an upper case node' do
         expect(subject).to eq 'AGENT-000000001'
       end
     end
 
     context 'when node is saved in downcase' do
-      let(:json_string) { "{\"busyExecutors\":0,\"computer\":[{\"actions\":[],\"displayName\":\"master\",\"executors\":[{},{},{},{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":false,\"launchSupported\":true,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":{\"availablePhysicalMemory\":976572416,\"availableSwapSpace\":0,\"totalPhysicalMemory\":7812575232,\"totalSwapSpace\":0},\"hudson.node_monitors.ArchitectureMonitor\":\"Linux (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":0},\"hudson.node_monitors.TemporarySpaceMonitor\":{\"path\":\"/tmp\",\"size\":65203343360},\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"04.7\",\"hudson.node_monitors.DiskSpaceMonitor\":{\"path\":\"/var/lib/jenkins\",\"size\":65203331072},\"hudson.node_monitors.ClockMonitor\":{\"diff\":0}},\"numExecutors\":4,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000001.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000002.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000006.example.com\",\"executors\":[{}],\"icon\":\"computer-x.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":null,\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":5000},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":null,\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":null},\"numExecutors\":1,\"offline\":true,\"offlineCause\":{},\"offlineCauseReason\":\"<span class=error style='display:inline-block'>Time out for last 5 try</span>\",\"oneOffExecutors\":[],\"temporarilyOffline\":false},{\"actions\":[],\"displayName\":\"agent-000000008.example.com\",\"executors\":[{}],\"icon\":\"computer.png\",\"idle\":true,\"jnlpAgent\":true,\"launchSupported\":false,\"loadStatistics\":{},\"manualLaunchAllowed\":true,\"monitorData\":{\"hudson.node_monitors.SwapSpaceMonitor\":null,\"hudson.node_monitors.ArchitectureMonitor\":\"Windows Server 2008 R2 (amd64)\",\"hudson.node_monitors.ResponseTimeMonitor\":{\"average\":535},\"hudson.node_monitors.TemporarySpaceMonitor\":null,\"hudson.plugins.network_monitor.NameResolutionMonitor\":null,\"hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor\":\"-1.0\",\"hudson.node_monitors.DiskSpaceMonitor\":null,\"hudson.node_monitors.ClockMonitor\":{\"diff\":-15535}},\"numExecutors\":1,\"offline\":false,\"offlineCause\":null,\"offlineCauseReason\":\"\",\"oneOffExecutors\":[],\"temporarilyOffline\":false}],\"displayName\":\"nodes\",\"totalExecutors\":5}" }
+      let(:json_string) do
+        {
+          'busyExecutors' => 0,
+          'computer' => [
+            {
+              'actions' => [],
+              'displayName' => 'master',
+              'executors' => [{}, {}, {}, {}],
+              'icon' => 'computer.png',
+              'idle' => true,
+              'jnlpAgent' => false,
+              'launchSupported' => true,
+              'loadStatistics' => {},
+              'manualLaunchAllowed' => true,
+              'monitorData' => {
+                'hudson.node_monitors.SwapSpaceMonitor' => {
+                  'availablePhysicalMemory' => 976_572_416,
+                  'availableSwapSpace' => 0,
+                  'totalPhysicalMemory' => 7_812_575_232,
+                  'totalSwapSpace' => 0
+                },
+                'hudson.node_monitors.ArchitectureMonitor' => 'Linux (amd64)',
+                'hudson.node_monitors.ResponseTimeMonitor' => {
+                  'average' => 0
+                },
+                'hudson.node_monitors.TemporarySpaceMonitor' => {
+                  'path' => '/tmp',
+                  'size' => 65_203_343_360
+                },
+                'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+                'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => '04.7',
+                'hudson.node_monitors.DiskSpaceMonitor' => {
+                  'path' => '/var/lib/jenkins',
+                  'size' => 65_203_331_072
+                },
+                'hudson.node_monitors.ClockMonitor' => {
+                  'diff' => 0
+                }
+              },
+              'numExecutors' => 4,
+              'offline' => false,
+              'offlineCause' => nil,
+              'offlineCauseReason' => '',
+              'oneOffExecutors' => [],
+              'temporarilyOffline' => false
+            },
+            {
+              'actions' => [],
+              'displayName' => 'agent-000000001.example.com',
+              'executors' => [{}],
+              'icon' => 'computer-x.png',
+              'idle' => true,
+              'jnlpAgent' => true,
+              'launchSupported' => false,
+              'loadStatistics' => {},
+              'manualLaunchAllowed' => true,
+              'monitorData' => {
+                'hudson.node_monitors.SwapSpaceMonitor' => nil,
+                'hudson.node_monitors.ArchitectureMonitor' => nil,
+                'hudson.node_monitors.ResponseTimeMonitor' => {
+                  'average' => 5000
+                },
+                'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+                'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+                'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => nil,
+                'hudson.node_monitors.DiskSpaceMonitor' => nil,
+                'hudson.node_monitors.ClockMonitor' => nil
+              },
+              'numExecutors' => 1,
+              'offline' => true,
+              'offlineCause' => {},
+              'offlineCauseReason' => "<span class=error style='display:inline-block'>Time out for last 5 try</span>",
+              'oneOffExecutors' => [],
+              'temporarilyOffline' => false
+            },
+            {
+              'actions' => [],
+              'displayName' => 'agent-000000002.example.com',
+              'executors' => [{}],
+              'icon' => 'computer-x.png',
+              'idle' => true,
+              'jnlpAgent' => true,
+              'launchSupported' => false,
+              'loadStatistics' => {},
+              'manualLaunchAllowed' => true,
+              'monitorData' => {
+                'hudson.node_monitors.SwapSpaceMonitor' => nil,
+                'hudson.node_monitors.ArchitectureMonitor' => nil,
+                'hudson.node_monitors.ResponseTimeMonitor' => {
+                  'average' => 5000
+                },
+                'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+                'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+                'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => nil,
+                'hudson.node_monitors.DiskSpaceMonitor' => nil,
+                'hudson.node_monitors.ClockMonitor' => nil
+              },
+              'numExecutors' => 1,
+              'offline' => true,
+              'offlineCause' => {},
+              'offlineCauseReason' => "<span class=error style='display:inline-block'>Time out for last 5 try</span>",
+              'oneOffExecutors' => [],
+              'temporarilyOffline' => false
+            },
+            {
+              'actions' => [],
+              'displayName' => 'agent-000000006.example.com',
+              'executors' => [{}],
+              'icon' => 'computer-x.png',
+              'idle' => true,
+              'jnlpAgent' => true,
+              'launchSupported' => false,
+              'loadStatistics' => {},
+              'manualLaunchAllowed' => true,
+              'monitorData' => {
+                'hudson.node_monitors.SwapSpaceMonitor' => nil,
+                'hudson.node_monitors.ArchitectureMonitor' => nil,
+                'hudson.node_monitors.ResponseTimeMonitor' => {
+                  'average' => 5000
+                },
+                'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+                'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+                'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => nil,
+                'hudson.node_monitors.DiskSpaceMonitor' => nil,
+                'hudson.node_monitors.ClockMonitor' => nil
+              },
+              'numExecutors' => 1,
+              'offline' => true,
+              'offlineCause' => {},
+              'offlineCauseReason' => "<span class=error style='display:inline-block'>Time out for last 5 try</span>",
+              'oneOffExecutors' => [],
+              'temporarilyOffline' => false
+            },
+            {
+              'actions' => [],
+              'displayName' => 'agent-000000008.example.com',
+              'executors' => [{}],
+              'icon' => 'computer.png',
+              'idle' => true,
+              'jnlpAgent' => true,
+              'launchSupported' => false,
+              'loadStatistics' => {},
+              'manualLaunchAllowed' => true,
+              'monitorData' => {
+                'hudson.node_monitors.SwapSpaceMonitor' => nil,
+                'hudson.node_monitors.ArchitectureMonitor' => 'Windows Server 2008 R2 (amd64)',
+                'hudson.node_monitors.ResponseTimeMonitor' => {
+                  'average' => 535
+                },
+                'hudson.node_monitors.TemporarySpaceMonitor' => nil,
+                'hudson.plugins.network_monitor.NameResolutionMonitor' => nil,
+                'hudson.plugins.systemloadaverage_monitor.SystemLoadAverageMonitor' => '-1.0',
+                'hudson.node_monitors.DiskSpaceMonitor' => nil,
+                'hudson.node_monitors.ClockMonitor' => {
+                  'diff' => -15535
+                }
+              },
+              'numExecutors' => 1,
+              'offline' => false,
+              'offlineCause' => nil,
+              'offlineCauseReason' => '',
+              'oneOffExecutors' => [],
+              'temporarilyOffline' => false
+            }
+          ],
+          'displayName' => 'nodes',
+          'totalExecutors' => 5
+        }.to_json
+      end
 
       it 'finds a down case node' do
         expect(subject).to eq 'agent-000000001'
