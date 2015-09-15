@@ -193,7 +193,7 @@ RSpec.describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
   let(:server) { 'localhost.lvh.me' }
   let(:slave) { 'jenkins-linux-agent.vagrant' }
   let(:publisher) { instance_double(Wonga::Daemon::Publisher) }
-  let(:node_params) { { 'username' => 'ProvisionerUsername', 'password' => 'secret', 'jvm_options' => '-Xmx50m -Xms5m' } }
+  let(:node_params) { { 'username' => 'ProvisionerUsername', 'password' => 'ProvisionerPassword', 'jvm_options' => '-Xmx50m -Xms5m' } }
   let(:node) do
     node = Chef::Node.new
     node.name(server)
@@ -462,7 +462,7 @@ RSpec.describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
     subject { handler.jenkins_username_and_password(server) }
 
     it 'returns username and password of a jenkins server' do
-      expect(subject).to eq(username: 'ProvisionerUsername', password: 'secret')
+      expect(subject).to eq(username: 'ProvisionerUsername', password: 'ProvisionerPassword')
     end
 
     context 'when node has empty params' do
@@ -492,7 +492,7 @@ RSpec.describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
     it 'gets the token by connecting to the server and by scraping the value of the API token' do
       VCR.use_cassette('synopsis') do
         username = 'ProvisionerUsername'
-        password = 'secret'
+        password = 'ProvisionerPassword'
         server_ip = 'localhost.lvh.me'
         server_port = 8080
         expect(subject.get_api_token(server_ip, server_port, username, password)).to eq 'bfa4fe165a71ba7c16cd0865e88a6b30'

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://instalments.example.com/login
+    uri: http://jenkins.example.com/login
     body:
       encoding: US-ASCII
       string: ''
@@ -18,7 +18,7 @@ http_interactions:
       accept-language:
       - en-us,en;q=0.5
       host:
-      - instalments.example.com
+      - jenkins.example.com
       connection:
       - keep-alive
       keep-alive:
@@ -59,7 +59,7 @@ http_interactions:
       x-jenkins-cli2-port:
       - '44423'
       x-ssh-endpoint:
-      - instalments.example.com:36656
+      - jenkins.example.com:36656
       x-instance-identity:
       - MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhygKpA/wQEkGOew3xq0KBWIxFbAN5Ik4tWxeOimhdOvh8+6lg6Kbm3lx+fmn+8ouAvyw6JrEk6TXxLAN1TeGH2T27IUbbnbMpylXwYM72jUNQtymTDLlL1+akUDXYhL+zKFof/jTC0I03YLndfTsMyjb5oWBtI+c25wMjZSCOlqHovAfR2m13D2eR0krb5JYaW9MsAG8tRkz5kWAHHCVnuuQZL1hGSKkPUhgzbvuXg0TD/nqoskiGL4+oi3ARUSpdDhZMzSyNVc5Ae8YXUw1SgyEIqB7KP/igtoC7CzRD6+k/0mIU8LndatBmdpsPjgdcjQCFhyG3VAankDdQ2uY/QIDAQAB
       x-powered-by:
@@ -161,7 +161,7 @@ http_interactions:
   recorded_at: Wed, 04 Dec 2013 11:32:08 GMT
 - request:
     method: post
-    uri: http://instalments.example.com/j_acegi_security_check
+    uri: http://jenkins.example.com/j_acegi_security_check
     body:
       encoding: UTF-8
       string: j_username=ProvisionerUsername&j_password=ProvisionerPassword&from=
@@ -179,13 +179,13 @@ http_interactions:
       cookie:
       - JSESSIONID.10430822=f57c4b819bebf88fcd690425a35adb7d
       host:
-      - instalments.example.com
+      - jenkins.example.com
       referer:
       - &1 !ruby/object:URI::HTTP
         scheme: http
         user: 
         password: 
-        host: instalments.example.com
+        host: jenkins.example.com
         port: 80
         path: "/login"
         query: 
@@ -215,7 +215,7 @@ http_interactions:
       connection:
       - keep-alive
       location:
-      - http://instalments.example.com/
+      - http://jenkins.example.com/
       x-powered-by:
       - Servlet/2.5 (Winstone/0.9.10)
     body:
@@ -225,7 +225,7 @@ http_interactions:
   recorded_at: Wed, 04 Dec 2013 11:32:08 GMT
 - request:
     method: get
-    uri: http://instalments.example.com/
+    uri: http://jenkins.example.com/
     body:
       encoding: US-ASCII
       string: ''
@@ -243,7 +243,7 @@ http_interactions:
       cookie:
       - JSESSIONID.10430822=f57c4b819bebf88fcd690425a35adb7d
       host:
-      - instalments.example.com
+      - jenkins.example.com
       referer:
       - *1
       connection:
@@ -286,7 +286,7 @@ http_interactions:
       x-jenkins-cli2-port:
       - '44423'
       x-ssh-endpoint:
-      - instalments.example.com:36656
+      - jenkins.example.com:36656
       x-instance-identity:
       - MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhygKpA/wQEkGOew3xq0KBWIxFbAN5Ik4tWxeOimhdOvh8+6lg6Kbm3lx+fmn+8ouAvyw6JrEk6TXxLAN1TeGH2T27IUbbnbMpylXwYM72jUNQtymTDLlL1+akUDXYhL+zKFof/jTC0I03YLndfTsMyjb5oWBtI+c25wMjZSCOlqHovAfR2m13D2eR0krb5JYaW9MsAG8tRkz5kWAHHCVnuuQZL1hGSKkPUhgzbvuXg0TD/nqoskiGL4+oi3ARUSpdDhZMzSyNVc5Ae8YXUw1SgyEIqB7KP/igtoC7CzRD6+k/0mIU8LndatBmdpsPjgdcjQCFhyG3VAankDdQ2uY/QIDAQAB
       x-powered-by:
@@ -516,7 +516,7 @@ http_interactions:
   recorded_at: Wed, 04 Dec 2013 11:32:08 GMT
 - request:
     method: get
-    uri: http://instalments.example.com/me/configure
+    uri: http://jenkins.example.com/me/configure
     body:
       encoding: US-ASCII
       string: ''
@@ -534,7 +534,7 @@ http_interactions:
       cookie:
       - JSESSIONID.10430822=f57c4b819bebf88fcd690425a35adb7d
       host:
-      - instalments.example.com
+      - jenkins.example.com
       connection:
       - keep-alive
       keep-alive:
@@ -575,7 +575,7 @@ http_interactions:
       x-jenkins-cli2-port:
       - '44423'
       x-ssh-endpoint:
-      - instalments.example.com:36656
+      - jenkins.example.com:36656
       x-instance-identity:
       - MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhygKpA/wQEkGOew3xq0KBWIxFbAN5Ik4tWxeOimhdOvh8+6lg6Kbm3lx+fmn+8ouAvyw6JrEk6TXxLAN1TeGH2T27IUbbnbMpylXwYM72jUNQtymTDLlL1+akUDXYhL+zKFof/jTC0I03YLndfTsMyjb5oWBtI+c25wMjZSCOlqHovAfR2m13D2eR0krb5JYaW9MsAG8tRkz5kWAHHCVnuuQZL1hGSKkPUhgzbvuXg0TD/nqoskiGL4+oi3ARUSpdDhZMzSyNVc5Ae8YXUw1SgyEIqB7KP/igtoC7CzRD6+k/0mIU8LndatBmdpsPjgdcjQCFhyG3VAankDdQ2uY/QIDAQAB
       x-powered-by:
@@ -922,7 +922,7 @@ http_interactions:
     uri: http://localhost.lvh.me:8080/j_acegi_security_check
     body:
       encoding: UTF-8
-      string: j_username=ProvisionerUsername&j_password=secret&from=
+      string: j_username=ProvisionerUsername&j_password=ProvisionerPassword&from=
     headers:
       Accept:
       - "*/*"
@@ -1331,7 +1331,7 @@ http_interactions:
   recorded_at: Wed, 04 Dec 2013 18:21:15 GMT
 - request:
     method: post
-    uri: http://ProvisionerUsername:bfa4fe165a71ba7c16cd0865e88a6b30@localhost.lvh.me:8080/computer/jenkins-linux-agent.vagrant/doDelete
+    uri: http://ProvisionerUsername:ProvisionerPassword@localhost.lvh.me:8080/computer/jenkins-linux-agent.vagrant/doDelete
     body:
       encoding: ASCII-8BIT
       string: ''
@@ -1511,7 +1511,7 @@ http_interactions:
     uri: http://127.0.0.1:8889/nodes/jenkins-linux-agent
     body:
       encoding: ASCII-8BIT
-      string: "{\"name\":\"jenkins-linux-agent\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{\"jenkins\":{\"cli\":{\"username\":\"ProvisionerUsername\",\"password\":\"secret\",\"jvm_options\":\"-Xmx50m
+      string: "{\"name\":\"jenkins-linux-agent\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{\"jenkins\":{\"cli\":{\"username\":\"ProvisionerUsername\",\"password\":\"ProvisionerPassword\",\"jvm_options\":\"-Xmx50m
         -Xms5m\"}}},\"override\":{},\"run_list\":[]}"
     headers:
       Content-Type:
@@ -1650,7 +1650,7 @@ http_interactions:
     uri: http://127.0.0.1:8889/nodes/localhost.lvh.me
     body:
       encoding: ASCII-8BIT
-      string: "{\"name\":\"localhost.lvh.me\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{\"jenkins\":{\"cli\":{\"username\":\"ProvisionerUsername\",\"password\":\"secret\",\"jvm_options\":\"-Xmx50m
+      string: "{\"name\":\"localhost.lvh.me\",\"chef_environment\":\"_default\",\"json_class\":\"Chef::Node\",\"automatic\":{},\"normal\":{},\"chef_type\":\"node\",\"default\":{\"jenkins\":{\"cli\":{\"username\":\"ProvisionerUsername\",\"password\":\"ProvisionerPassword\",\"jvm_options\":\"-Xmx50m
         -Xms5m\"}}},\"override\":{},\"run_list\":[]}"
     headers:
       Content-Type:
