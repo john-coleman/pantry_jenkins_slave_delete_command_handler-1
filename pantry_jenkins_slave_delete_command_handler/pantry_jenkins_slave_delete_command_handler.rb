@@ -26,7 +26,7 @@ module Wonga
         credentials = jenkins_username_and_password(message['server_fqdn']) || jenkins_username_and_password(message['hostname'] + '.' + message['domain'])
 
         if credentials
-          api_token = get_api_token(message['server_fqdn'], message['server_port'], credentials[:username], credentials[:password])
+          api_token = get_api_token(message['server_fqdn'], credentials[:username], credentials[:password], message['server_port'])
           jenkins_slave_node_url = "#{message['server_fqdn']}:#{server_port}/computer/#{node}.#{message['domain']}"
           @logger.info "Deleting #{node} slave with authentication"
           RestClient.post("http://#{credentials[:username]}:#{api_token}@#{jenkins_slave_node_url}/doDelete", {})
@@ -56,7 +56,7 @@ module Wonga
         end
       end
 
-      def get_api_token(server_fqdn, server_port = 80, username, password)
+      def get_api_token(server_fqdn, username, password, server_port = 80)
         url = "http://#{server_fqdn}:#{server_port}/login"
         api_url = "http://#{server_fqdn}:#{server_port}/me/configure"
         agent = Mechanize.new

@@ -1,7 +1,9 @@
 AllCops:
   Exclude:
-    - 'Guardfile'
-    - 'Gemfile'
+    - '**/metadata.rb'
+    - '**/*.gemspec'
+    - '**/version.rb'
+    - '*file'
 
 Style/ClassAndModuleChildren:
   Enabled: false
@@ -19,7 +21,7 @@ Style/MultilineOperationIndentation:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 160
+  Max: 202
 Metrics/MethodLength:
   Max: 35
 Metrics/ClassLength:
@@ -30,3 +32,5 @@ Metrics/PerceivedComplexity:
   Max: 13
 Metrics/AbcSize:
   Enabled: false
+Metrics/ParameterLists:
+  Max: 6

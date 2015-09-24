@@ -245,9 +245,9 @@ RSpec.describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
       node.save
 
       expect(subject).to receive(:get_api_token).with(message['server_fqdn'],
-                                                      message['server_port'],
                                                       'server_test',
-                                                      'server_secret')
+                                                      'server_secret',
+                                                      message['server_port'])
 
       subject.handle_message(message)
     end
@@ -260,9 +260,9 @@ RSpec.describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
       node.save
 
       expect(subject).to receive(:get_api_token).with(message['server_fqdn'],
-                                                      message['server_port'],
                                                       'slave_test',
-                                                      'slave_secret')
+                                                      'slave_secret',
+                                                      message['server_port'])
 
       subject.handle_message(message)
     end
@@ -495,7 +495,7 @@ RSpec.describe Wonga::Daemon::PantryJenkinsSlaveDeleteCommandHandler do
         password = 'ProvisionerPassword'
         server_ip = 'localhost.lvh.me'
         server_port = 8080
-        expect(subject.get_api_token(server_ip, server_port, username, password)).to eq 'bfa4fe165a71ba7c16cd0865e88a6b30'
+        expect(subject.get_api_token(server_ip, username, password, server_port)).to eq 'bfa4fe165a71ba7c16cd0865e88a6b30'
       end
     end
   end
